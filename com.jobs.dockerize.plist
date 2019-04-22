@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+	<string>com.jobs.dockerize</string>
+    <key>Program</key>
+    <string>/Users/Jobs/scripts/dockerize</string>
+    <key>WorkingDirectory</key>
+    <string>/usr/local/bin</string>
+    <key>HardResourceLimits</key>
+    <dict>
+        <key>FileSize</key>
+        <integer>1048576</integer>
+    </dict>
+    <key>SoftResourceLimits</key>
+    <dict>
+        <key>FileSize</key>
+        <integer>524288</integer>
+    </dict>
+    <key>StandardOutPath</key>
+    <string>/Users/Jobs/scripts/dockerize.stdout.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/Jobs/scripts/dockerize.stderr.log</string>
+    <key>LaunchEvents</key>
+    <dict>
+            <key>com.apple.iokit.matching</key>
+            <dict>
+                    <key>com.apple.device-attach</key>
+                    <dict>
+                            <key>idProduct</key>
+                            <integer>26</integer>
+                            <key>idVendor</key>
+                            <integer>9494</integer>
+                            <key>IOProviderClass</key>
+                            <string>IOUSBDevice</string>
+                            <key>IOMatchStream</key>
+                            <true/>
+                    </dict>
+            </dict>
+    </dict>
+</dict>
+</plist>

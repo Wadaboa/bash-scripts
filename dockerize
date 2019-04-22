@@ -1,0 +1,60 @@
+#!/bin/bash
+
+# ----------------------------------------------------------------------
+# | Docking automation script                                           |
+# | (Executed at connection/disconnection of my external keyboard)      |
+# ----------------------------------------------------------------------
+
+# If there's my external keyboard connected, change keyboard layout from US to IT and enable bluetooth
+
+ioreg -p IOUSB -w0 | sed 's/[^o]*o //; s/@.*$//' | grep -v '^Root.*' | grep 'Keyboard -- QuickFire XT' &> /dev/null
+if [ $? == 0 ]; then
+	./xkbswitch -ge | grep 'US' &> /dev/null
+	if [ $? == 0 ]; then
+		./xkbswitch -s 4
+		./blueutil on
+	fi
+else
+	./xkbswitch -g | grep '4' &> /dev/null
+	if [ $? == 0 ]; then
+		./xkbswitch -se US
+		./blueutil off
+	fi
+fi
+
+
+# If there's an active ethernet connection, shuts down wifi
+
+services=$(networksetup -listnetworkserviceorder | grep 'Hardware Port')
+
+while read line; do
+    sname=$(echo $line | awk -F  "(, )|(: )|[)]" '{print $2}')
+    sdev=$(echo $line | awk -F  "(, )|(: )|[)]" '{print $4}')
+    if [ -n "$sdev" ]; then
+        ifout="$(ifconfig $sdev 2>/dev/null)"
+        echo "$ifout" | grep 'status: active' > /dev/null 2>&1
+        rc="$?"
+        if [ "$rc" -eq 0 ]; then
+            currentservice="$sname"
+            currentdevice="$sdev"
+            currentmac=$(echo "$ifout" | awk '/ether/{print $2}')
+        fi
+    fi
+done <<< "$(echo "$services")"
+
+if [ "$currentservice" = "USB 10/100/1000 LAN" ] || [ "$currentservice" = "Thunderbolt Ethernet" ]; then
+    networksetup -setairportpower en0 off
+else
+    networksetup -setairportpower en0 on
+fi
+
+
+# If there are two connected external monitors, set a dual wallpaper
+
+mon=$(system_profiler SPDisplaysDataType | grep Resolution | wc -l | grep 2)
+if [ $mon == 2 ]; then
+	osascript -e 'tell application "System Events" to tell desktop 1 to set picture to "/Users/Jobs/scripts/assets/two_left.jpg"'
+	osascript -e 'tell application "System Events" to tell desktop 2 to set picture to "/Users/Jobs/scripts/assets/two_right.jpg"'
+else
+	osascript -e 'tell application "System Events" to tell desktop 1 to set picture to "/Users/Jobs/scripts/assets/one.jpg"'
+fi
