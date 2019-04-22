@@ -1,0 +1,23 @@
+#!/bin/bash
+
+ping -c 1 google.com >> /dev/null 2>&1
+if [ $? == 0 ]; then
+	ONLINE=1
+else 
+	ONLINE=0
+fi
+
+while true; do
+	if ping -c 1 google.com >> /dev/null 2>&1; then
+		if [ $ONLINE == 0 ]; then
+	    	osascript -e 'display notification "Online" with title "Internet connection"'
+	    	ONLINE=1
+	    fi
+	else
+		if [ $ONLINE == 1 ]; then
+	    	osascript -e 'display notification "Offline" with title "Internet connection"'
+	    	ONLINE=0
+	    fi
+	fi
+sleep 2
+done

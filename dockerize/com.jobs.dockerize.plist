@@ -5,7 +5,7 @@
     <key>Label</key>
 	<string>com.jobs.dockerize</string>
     <key>Program</key>
-    <string>/Users/Jobs/scripts/dockerize</string>
+    <string>/Users/Jobs/scripts/dockerize/dockerize</string>
     <key>WorkingDirectory</key>
     <string>/usr/local/bin</string>
     <key>HardResourceLimits</key>
@@ -19,9 +19,9 @@
         <integer>524288</integer>
     </dict>
     <key>StandardOutPath</key>
-    <string>/Users/Jobs/scripts/dockerize.stdout.log</string>
+    <string>/Users/Jobs/scripts/dockerize/dockerize.stdout.log</string>
     <key>StandardErrorPath</key>
-    <string>/Users/Jobs/scripts/dockerize.stderr.log</string>
+    <string>/Users/Jobs/scripts/dockerize/dockerize.stderr.log</string>
     <key>LaunchEvents</key>
     <dict>
             <key>com.apple.iokit.matching</key>
