@@ -10,6 +10,8 @@ Below is an example on how to install the `dockerize` script:
 6. Click on `Full Disk Access` and add the `dockerize` executable to the list
 7. Click on `Accessibility` and add the `dockerize` executable to the list
 
+**NOTE**: These scripts are written to work with personal settings (For example, I take for granted that my home folder is located in `/Users/Jobs`).
+
 ## Scripts
 ### dockerize
 Script used to automate some tasks relative to docking/undocking the system to/from home/work.\
